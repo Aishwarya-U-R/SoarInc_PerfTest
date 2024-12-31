@@ -59,11 +59,18 @@ jobs:
       # Step 8: Run the BDD test using k6
       - name: Run k6 BDD Test
         run: |
-          k6 run tests/bdd_load_test.js > tests/results.csv
+          k6 run --out json=tests/testevidences/metrics.json tests/bdd_load_test.js > tests/results.json
 
       # Step 9: Upload Test Results as Artifact
       - name: Upload Test Results
         uses: actions/upload-artifact@v3
         with:
           name: k6-results
-          path: tests/results.csv
+          path: tests/results.json
+
+      # Step 10: Upload k6 metrics (JSON)
+      - name: Upload k6 metrics (JSON)
+        uses: actions/upload-artifact@v3
+        with:
+          name: k6-metrics-json
+          path: tests/testevidences/metrics.json
