@@ -12,4 +12,9 @@ python3 db_init.py
 
 python3 task.py
 
-To run tests from project folder: `k6 run --out json=testevidences/results.json tests/client_registration_load_test.js`
+go install go.k6.io/xk6/cmd/xk6@latest
+
+xk6 build --with github.com/avitalique/xk6-file@latest
+
+To run tests from project folder:
+`./k6 run --out json=tests/testevidences/metrics.json tests/client_registration_load_test.js`
