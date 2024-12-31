@@ -4,8 +4,8 @@ import { randomString } from "https://jslib.k6.io/k6-utils/1.0.0/index.js"; // f
 import file from "k6/x/file";
 
 const BASE_URL = "http://localhost:5000";
-const TOTAL_VUS = 10; // Total number of virtual users
-const DURATION = "1m"; // Duration of the test
+const TOTAL_VUS = 50; // Total number of virtual users
+const DURATION = "5m"; // Duration of the test
 
 export function setup() {
   const outputFile = `./users_json/generated_users_${Date.now()}.json`;
@@ -16,10 +16,10 @@ export function setup() {
 // Random Data Generator
 function generateRandomUserData() {
   return {
-    fullName: randomString(10),
-    userName: randomString(8),
-    email: `${randomString(5)}@example.com`,
-    password: randomString(12),
+    fullName: `fn_${randomString(10)}`,
+    userName: `un_${randomString(8)}`,
+    email: `${randomString(5)}@loadtest.com`,
+    password: `pswd_${randomString(12)}`,
     phone: `${Math.floor(Math.random() * 1000000000)}`,
   };
 }
@@ -27,6 +27,9 @@ function generateRandomUserData() {
 export let options = {
   vus: TOTAL_VUS,
   duration: DURATION,
+  thresholds: {
+    http_req_duration: ["p(95)<50"], // 95% of requests must complete below 50ms
+  },
 };
 
 // export let options = {
