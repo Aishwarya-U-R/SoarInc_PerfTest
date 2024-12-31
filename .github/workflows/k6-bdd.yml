@@ -1,0 +1,65 @@
+name: Run k6 BDD Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  k6-bdd:
+    runs-on: ubuntu-22.04
+
+    steps:
+      # Step 1: Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Step 2: Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.11"
+
+      # Step 3: Install Python dependencies (if required)
+      - name: Install Python dependencies
+        run: |
+          python3 -m venv venv
+          source venv/bin/activate
+          pip install -r requirements.txt
+
+      # Step 4: Initialize the database
+      - name: Run DB Initialization Script
+        run: |
+          source venv/bin/activate
+          python3 db_init.py
+
+      # Step 5: Start Python app in the background
+      - name: Start Python App
+        run: |
+          source venv/bin/activate
+          nohup python3 task.py > app.log 2>&1 &
+
+      # Step 6: Wait for app to be ready
+      - name: Wait for the app to start
+        run: sleep 5 # Adjust the delay based on app startup time
+
+      # Step 7: Install k6 CLI
+      - name: Install k6
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y k6
+
+      # Step 8: Run the BDD test using k6
+      - name: Run k6 BDD Test
+        run: |
+          k6 run tests/bdd_load_test.js > tests/results.csv
+
+      # Step 9: Upload Test Results as Artifact
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v2
+        with:
+          name: k6-results
+          path: tests/results.csv
