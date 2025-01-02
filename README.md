@@ -28,3 +28,6 @@ To run tests from project folder:
 BDD Load test integrated to CI [here](https://github.com/Aishwarya-U-R/SoarInc_PerfTest/actions)
 
 Once run completes (manual trigger for now) k6-Metrics & k6-Results are uploaded as artifacts into same pipeline run
+
+## Task 2
+Wiki mobile app Apptim Performance report availabe [here](https://github.com/Aishwarya-U-R/SoarInc_PerfTest/blob/main/Apptim_Report(WikiApp)/WikiApp_PerformanceReport.pdf)
