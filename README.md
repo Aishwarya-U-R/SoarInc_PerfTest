@@ -1,7 +1,7 @@
-# Logical and security testing
+# 4. Logical and security testing
 Logical and security vulnerabilities are available at [client_registeration](https://github.com/Aishwarya-U-R/SoarInc_PerfTest/blob/main/Risk_Score_Reports/client_registeration.pdf) & [client_login](https://github.com/Aishwarya-U-R/SoarInc_PerfTest/blob/main/Risk_Score_Reports/client_login.pdf)
 
-# Performance Testing
+# 5. Performance Testing
 ## Task 1
 git clone https://github.com/Galileo0/Soar_Test.git
 
